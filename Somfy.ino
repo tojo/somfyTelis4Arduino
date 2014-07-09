@@ -5,6 +5,8 @@
 // Remote control button 
 int myBtnPin = 3;
 int channelSelBtnPin = 4;
+int upBtnPin = 5;
+int downBtnPin = 6;
 
 // Home automation input commands
 int activePin = 8;
@@ -27,6 +29,8 @@ void setup() {
   
   // output
   pinMode(myBtnPin, OUTPUT);
+  pinMode(upBtnPin, OUTPUT);
+  pinMode(downBtnPin, OUTPUT);
   pinMode(channelSelBtnPin, OUTPUT);
   
   // timings
@@ -39,17 +43,25 @@ void setup() {
 void loop() {
   if (digitalRead(activePin) == HIGH &! lastCmdActive) {
     lastCmdActive = true;
-    switchChannel(1);
+    //switchChannel(1);
+    pressButton(downBtnPin);
   } else if (digitalRead(activePin) == LOW) {
     lastCmdActive = false;
   }
 }
 
 /**
- * Switch remote control channel.
+ * Switch remote control channel in the following order:
+ * - channel 1
+ * - channel 2
+ * - channel 3
+ * - channel 4
+ * - all channels
  * 
  * First pressure on the button shows the actual active channel, 
  * seconde one switch to the next channel.
+ *
+ * int times: how many channel switching events should be emitted
  */
 void switchChannel(int times) {
   if (lastChannelSwitchTime + minTimeBetweenChannelSwitching < millis()) {
