@@ -22,7 +22,7 @@ int activeCh;
 
 // Timings [milli seconds]
 unsigned long lastchSwitchTime;
-int btnPressureTime = 100;
+int btnPressureTime = 50;
 unsigned long minTimeBetweenchSwitching = 5000;
 
 /**
@@ -50,6 +50,7 @@ void setup() {
   SCmd.addCommand("ACTIVE",printActiveCh);
   SCmd.addCommand("UP",cmdUp);
   SCmd.addCommand("MY",cmdMy);
+  SCmd.addCommand("STOP",cmdMy);
   SCmd.addCommand("DOWN",cmdDown);
   SCmd.addCommand("SWITCH",cmdSwitchch);
   SCmd.setDefaultHandler(cmdUnrecognized);
@@ -117,7 +118,7 @@ void cmdDown() {
  */
 void cmdUnrecognized(const char *command) {
   Serial.print("Valid commands: 'ACTIVE', 'UP $ch'"); 
-  Serial.println(", 'DOWN $ch', 'MY $ch', 'SWITCH $ch'"); 
+  Serial.println(", 'DOWN $ch', 'MY $ch', 'STOP $ch', 'SWITCH $ch'"); 
 }
 
 /**
